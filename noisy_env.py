@@ -17,6 +17,8 @@ class PegInsertionSideNoisyEnv(PegInsertionSideEnv):
     """
 
     def __init__(self, *args, hole_offset_range=(0.0, 0.0), **kwargs):
+        if not 0 <= hole_offset_range[0] <= hole_offset_range[1]:
+            raise ValueError(f"hole_offset_range must satisfy 0 <= low <= high, got {hole_offset_range}")
         self.hole_offset_range = hole_offset_range
         super().__init__(*args, **kwargs)
 
