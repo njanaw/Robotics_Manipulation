@@ -21,6 +21,9 @@ from mani_skill.utils.wrappers.flatten import FlattenActionSpaceWrapper
 from mani_skill.utils.wrappers.record import RecordEpisode
 from mani_skill.vector.wrappers.gymnasium import ManiSkillVectorEnv
 
+import noisy_env  # registers PegInsertionSideNoisy-v1
+from residual import HoldBase, ResidualWrapper
+
 @dataclass
 class Args:
     exp_name: Optional[str] = None
@@ -47,8 +50,16 @@ class Args:
     """path to a pretrained checkpoint file to start evaluation/training from"""
 
     # Algorithm specific arguments
-    env_id: str = "PickCube-v1"
+    env_id: str = "PegInsertionSideNoisy-v1"
     """the id of the environment"""
+    sim_backend: str = "physx_cuda"
+    """physx_cuda for training, physx_cpu (num_envs 1) for local smoke tests"""
+    hole_offset_range: tuple[float, float] = (0.0, 0.0)
+    """observed hole offset magnitude range in metres; (0, 0.004) for the noise-trained residual"""
+    base: Optional[str] = None
+    """frozen base policy for residual RL; None trains PPO from scratch"""
+    residual_scale: float = 0.1
+    """residual action scale, from ResiP"""
     total_timesteps: int = 10000000
     """total timesteps of the experiments"""
     learning_rate: float = 3e-4
@@ -69,7 +80,7 @@ class Args:
     """how often to reconfigure the environment during training"""
     eval_reconfiguration_freq: Optional[int] = 1
     """for benchmarking purposes we want to reconfigure the eval environment each reset to ensure objects are randomized in some tasks"""
-    control_mode: Optional[str] = "pd_joint_delta_pos"
+    control_mode: Optional[str] = "pd_ee_delta_pose"
     """the control mode to use for the environment"""
     anneal_lr: bool = False
     """Toggle learning rate annealing for policy and value networks"""
@@ -119,10 +130,12 @@ def layer_init(layer, std=np.sqrt(2), bias_const=0.0):
 
 
 class Agent(nn.Module):
-    def __init__(self, envs):
+    def __init__(self, envs, obs_dim, logstd_init):
         super().__init__()
+        # critic reads env obs only; under residual RL the actor also reads the appended base action
+        self.obs_dim = obs_dim
         self.critic = nn.Sequential(
-            layer_init(nn.Linear(np.array(envs.single_observation_space.shape).prod(), 256)),
+            layer_init(nn.Linear(obs_dim, 256)),
             nn.Tanh(),
             layer_init(nn.Linear(256, 256)),
             nn.Tanh(),
@@ -139,10 +152,10 @@ class Agent(nn.Module):
             nn.Tanh(),
             layer_init(nn.Linear(256, np.prod(envs.single_action_space.shape)), std=0.01*np.sqrt(2)),
         )
-        self.actor_logstd = nn.Parameter(torch.ones(1, np.prod(envs.single_action_space.shape)) * -0.5)
+        self.actor_logstd = nn.Parameter(torch.ones(1, np.prod(envs.single_action_space.shape)) * logstd_init)
 
     def get_value(self, x):
-        return self.critic(x)
+        return self.critic(x[..., :self.obs_dim])
     def get_action(self, x, deterministic=False):
         action_mean = self.actor_mean(x)
         if deterministic:
@@ -158,7 +171,7 @@ class Agent(nn.Module):
         probs = Normal(action_mean, action_std)
         if action is None:
             action = probs.sample()
-        return action, probs.log_prob(action).sum(1), probs.entropy().sum(1), self.critic(x)
+        return action, probs.log_prob(action).sum(1), probs.entropy().sum(1), self.get_value(x)
 
 class Logger:
     def __init__(self, log_wandb=False, tensorboard: SummaryWriter = None) -> None:
@@ -192,7 +205,8 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
 
     # env setup
-    env_kwargs = dict(obs_mode="state", render_mode="rgb_array", sim_backend="physx_cuda")
+    env_kwargs = dict(obs_mode="state", render_mode="rgb_array", sim_backend=args.sim_backend,
+                      hole_offset_range=args.hole_offset_range)
     if args.control_mode is not None:
         env_kwargs["control_mode"] = args.control_mode
     envs = gym.make(args.env_id, num_envs=args.num_envs if not args.evaluate else 1, reconfiguration_freq=args.reconfiguration_freq, **env_kwargs)
@@ -214,6 +228,12 @@ if __name__ == "__main__":
     assert isinstance(envs.single_action_space, gym.spaces.Box), "only continuous action space is supported"
 
     max_episode_steps = gym_utils.find_max_episode_steps_value(envs._env)
+    obs_dim = envs.single_observation_space.shape[0]
+    if args.base is not None:
+        bases = dict(hold=HoldBase)
+        act_dim = envs.single_action_space.shape[0]
+        envs = ResidualWrapper(envs, bases[args.base](act_dim), args.residual_scale)
+        eval_envs = ResidualWrapper(eval_envs, bases[args.base](act_dim), args.residual_scale)
     logger = None
     if not args.evaluate:
         print("Running training")
@@ -241,7 +261,8 @@ if __name__ == "__main__":
     else:
         print("Running evaluation")
 
-    agent = Agent(envs).to(device)
+    # ResiP initial log std is -1.0; the actor's small-gain final layer already starts the residual near 0
+    agent = Agent(envs, obs_dim, -1.0 if args.base is not None else -0.5).to(device)
     optimizer = optim.Adam(agent.parameters(), lr=args.learning_rate, eps=1e-5)
 
     # ALGO Logic: Storage setup
@@ -266,10 +287,16 @@ if __name__ == "__main__":
     def clip_action(action: torch.Tensor):
         return torch.clamp(action.detach(), action_space_low, action_space_high)
 
+    start_iteration = 1
     if args.checkpoint:
-        agent.load_state_dict(torch.load(args.checkpoint))
+        ckpt = torch.load(args.checkpoint, weights_only=True)
+        agent.load_state_dict(ckpt["agent"])
+        if not args.evaluate:
+            # resume after a cluster time limit: continue the step count so learning curves stay aligned
+            optimizer.load_state_dict(ckpt["optimizer"])
+            start_iteration, global_step = ckpt["iteration"], ckpt["global_step"]
 
-    for iteration in range(1, args.num_iterations + 1):
+    for iteration in range(start_iteration, args.num_iterations + 1):
         print(f"Epoch: {iteration}, global_step={global_step}")
         final_values = torch.zeros((args.num_steps, args.num_envs), device=device)
         agent.eval()
@@ -296,7 +323,8 @@ if __name__ == "__main__":
                 break
         if args.save_model and iteration % args.eval_freq == 1:
             model_path = f"runs/{run_name}/ckpt_{iteration}.pt"
-            torch.save(agent.state_dict(), model_path)
+            torch.save(dict(agent=agent.state_dict(), optimizer=optimizer.state_dict(),
+                            iteration=iteration, global_step=global_step), model_path)
             print(f"model saved to {model_path}")
         # Annealing the rate if instructed to do so.
         if args.anneal_lr:
@@ -463,7 +491,8 @@ if __name__ == "__main__":
     if not args.evaluate:
         if args.save_model:
             model_path = f"runs/{run_name}/final_ckpt.pt"
-            torch.save(agent.state_dict(), model_path)
+            torch.save(dict(agent=agent.state_dict(), optimizer=optimizer.state_dict(),
+                            iteration=args.num_iterations + 1, global_step=global_step), model_path)
             print(f"model saved to {model_path}")
         logger.close()
     envs.close()
