@@ -229,10 +229,11 @@ if __name__ == "__main__":
 
     max_episode_steps = gym_utils.find_max_episode_steps_value(envs._env)
     if args.base is not None:
-        bases = dict(hold=HoldBase)
+        if args.base != "hold":
+            raise ValueError(f"unknown base {args.base}")
         act_dim = envs.single_action_space.shape[0]
-        envs = ResidualWrapper(envs, bases[args.base](act_dim), args.residual_scale)
-        eval_envs = ResidualWrapper(eval_envs, bases[args.base](act_dim), args.residual_scale)
+        envs = ResidualWrapper(envs, HoldBase(act_dim), args.residual_scale)
+        eval_envs = ResidualWrapper(eval_envs, HoldBase(act_dim), args.residual_scale)
     logger = None
     if not args.evaluate:
         print("Running training")
@@ -299,6 +300,7 @@ if __name__ == "__main__":
             np.random.seed(args.seed + start_iteration)
             next_obs, _ = envs.reset(seed=args.seed + start_iteration)
 
+    start_global_step = global_step
     for iteration in range(start_iteration, args.num_iterations + 1):
         print(f"Epoch: {iteration}, global_step={global_step}")
         final_values = torch.zeros((args.num_steps, args.num_envs), device=device)
@@ -310,7 +312,7 @@ if __name__ == "__main__":
             num_episodes = 0
             for _ in range(args.num_eval_steps):
                 with torch.no_grad():
-                    eval_obs, eval_rew, eval_terminations, eval_truncations, eval_infos = eval_envs.step(agent.get_action(eval_obs, deterministic=True))
+                    eval_obs, eval_rew, eval_terminations, eval_truncations, eval_infos = eval_envs.step(clip_action(agent.get_action(eval_obs, deterministic=True)))
                     if "final_info" in eval_infos:
                         mask = eval_infos["_final_info"]
                         num_episodes += mask.sum()
@@ -487,8 +489,9 @@ if __name__ == "__main__":
         logger.add_scalar("losses/approx_kl", approx_kl.item(), global_step)
         logger.add_scalar("losses/clipfrac", np.mean(clipfracs), global_step)
         logger.add_scalar("losses/explained_variance", explained_var, global_step)
-        print("SPS:", int(global_step / (time.time() - start_time)))
-        logger.add_scalar("charts/SPS", int(global_step / (time.time() - start_time)), global_step)
+        sps = int((global_step - start_global_step) / (time.time() - start_time))
+        print("SPS:", sps)
+        logger.add_scalar("charts/SPS", sps, global_step)
         logger.add_scalar("time/step", global_step, global_step)
         logger.add_scalar("time/update_time", update_time, global_step)
         logger.add_scalar("time/rollout_time", rollout_time, global_step)
