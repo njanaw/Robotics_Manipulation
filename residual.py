@@ -56,7 +56,6 @@ class ResidualWrapper(gym.vector.VectorWrapper):
     def step(self, actions):
         action = torch.clamp(self.base_action + self.scale * actions, self.action_low, self.action_high)
         obs, rew, terminations, truncations, infos = self.env.step(action)
-        # unconditional: checking done.any() would force a gpu sync every step
         self.base.reset(terminations | truncations)
         self.base_action = self.base.act(obs)
         return torch.cat([obs, self.base_action], -1), rew, terminations, truncations, infos
