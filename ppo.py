@@ -132,12 +132,10 @@ def layer_init(layer, std=np.sqrt(2), bias_const=0.0):
 
 
 class Agent(nn.Module):
-    def __init__(self, envs, obs_dim, logstd_init):
+    def __init__(self, envs, logstd_init):
         super().__init__()
-        # critic reads env obs only; under residual RL the actor also reads the appended base action
-        self.obs_dim = obs_dim
         self.critic = nn.Sequential(
-            layer_init(nn.Linear(obs_dim, 256)),
+            layer_init(nn.Linear(np.array(envs.single_observation_space.shape).prod(), 256)),
             nn.Tanh(),
             layer_init(nn.Linear(256, 256)),
             nn.Tanh(),
@@ -157,7 +155,7 @@ class Agent(nn.Module):
         self.actor_logstd = nn.Parameter(torch.ones(1, np.prod(envs.single_action_space.shape)) * logstd_init)
 
     def get_value(self, x):
-        return self.critic(x[..., :self.obs_dim])
+        return self.critic(x)
     def get_action(self, x, deterministic=False):
         action_mean = self.actor_mean(x)
         if deterministic:
@@ -230,7 +228,6 @@ if __name__ == "__main__":
     assert isinstance(envs.single_action_space, gym.spaces.Box), "only continuous action space is supported"
 
     max_episode_steps = gym_utils.find_max_episode_steps_value(envs._env)
-    obs_dim = envs.single_observation_space.shape[0]
     if args.base is not None:
         bases = dict(hold=HoldBase)
         act_dim = envs.single_action_space.shape[0]
@@ -264,7 +261,7 @@ if __name__ == "__main__":
         print("Running evaluation")
 
     # ResiP initial log std is -1.0; the actor's small-gain final layer already starts the residual near 0
-    agent = Agent(envs, obs_dim, -1.0 if args.base is not None else -0.5).to(device)
+    agent = Agent(envs, -1.0 if args.base is not None else -0.5).to(device)
     optimizer = optim.Adam(agent.parameters(), lr=args.learning_rate, eps=1e-5)
 
     # ALGO Logic: Storage setup
@@ -357,8 +354,10 @@ if __name__ == "__main__":
                 done_mask = infos["_final_info"]
                 for k, v in final_info["episode"].items():
                     logger.add_scalar(f"train/{k}", v[done_mask].float().mean(), global_step)
-                with torch.no_grad():
-                    final_values[step, torch.arange(args.num_envs, device=device)[done_mask]] = agent.get_value(infos["final_observation"][done_mask]).view(-1)
+                # residual follows ResiP: no bootstrap at episode end, since the terminal obs has no base action
+                if args.base is None:
+                    with torch.no_grad():
+                        final_values[step, torch.arange(args.num_envs, device=device)[done_mask]] = agent.get_value(infos["final_observation"][done_mask]).view(-1)
         rollout_time = time.time() - rollout_time
         # bootstrap value according to termination and truncation
         with torch.no_grad():

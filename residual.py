@@ -53,9 +53,5 @@ class ResidualWrapper(gym.vector.VectorWrapper):
         done = terminations | truncations
         if done.any():
             self.base.reset(done)
-        if "final_observation" in infos:
-            # the critic reads env obs only, so the base-action slot of a terminal obs is never used
-            infos["final_observation"] = torch.cat(
-                [infos["final_observation"], torch.zeros_like(self.base_action)], -1)
         self.base_action = self.base.act(obs)
         return torch.cat([obs, self.base_action], -1), rew, terminations, truncations, infos
