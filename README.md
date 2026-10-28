@@ -12,9 +12,9 @@ uv run pytest tests
 ## Residual PPO
 
 ```bash
-uv run python ppo.py --base hold                               # clean residual on the stand-in base
-uv run python ppo.py --base hold --hole-offset-range 0 0.004   # noise-trained residual (4')
-uv run python ppo.py                                           # PPO from scratch (3)
+uv run python ppo.py --base hold --reward-mode sparse                               # clean residual (4)
+uv run python ppo.py --base hold --reward-mode sparse --hole-offset-range 0 0.004   # noise-trained residual (4')
+uv run python ppo.py                                                                # PPO from scratch (3), dense
 uv run python ppo.py --base hold --checkpoint runs/<run>/ckpt_<i>.pt --exp-name <run>  # resume
 ```
 
