@@ -43,7 +43,13 @@ class ResidualWrapper(gym.vector.VectorWrapper):
 
     def reset(self, *, seed=None, options=None):
         obs, info = self.env.reset(seed=seed, options=options)
-        self.base.reset(torch.ones(obs.shape[0], dtype=torch.bool, device=obs.device))
+        if options is not None and "env_idx" in options:
+            # partial reset: only the listed envs start a new episode
+            mask = torch.zeros(obs.shape[0], dtype=torch.bool, device=obs.device)
+            mask[options["env_idx"]] = True
+        else:
+            mask = torch.ones(obs.shape[0], dtype=torch.bool, device=obs.device)
+        self.base.reset(mask)
         self.base_action = self.base.act(obs)
         return torch.cat([obs, self.base_action], -1), info
 
