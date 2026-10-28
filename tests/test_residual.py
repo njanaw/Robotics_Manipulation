@@ -67,3 +67,36 @@ def test_zero_residual_reproduces_base():
         wrapped_obs, *_ = wrapped.step(torch.zeros((1, act_dim)))
     base_only.close()
     wrapped.close()
+
+
+class RecordingBase(HoldBase):
+    def __init__(self, act_dim):
+        super().__init__(act_dim)
+        self.events = []
+
+    def reset(self, mask):
+        self.events.append(("reset", bool(mask.any())))
+
+    def act(self, obs):
+        self.events.append(("act", obs.clone()))
+        return super().act(obs)
+
+
+def test_base_resets_before_acting_on_next_episode():
+    env = make_env((0.0, 0.0))
+    act_dim = env.single_action_space.shape[0]
+    base = RecordingBase(act_dim)
+    wrapped = ResidualWrapper(env, base, 0.1)
+    wrapped.reset(seed=0)
+    for _ in range(100):
+        base.events.clear()
+        obs, _, _, truncations, _ = wrapped.step(torch.zeros((1, act_dim)))
+        if truncations.any():
+            break
+    assert truncations.any()
+    # auto-reset already happened, so obs is the next episode's first obs
+    assert env.unwrapped.elapsed_steps[0].item() == 0
+    (reset_kind, reset_any), (act_kind, act_obs) = base.events
+    assert (reset_kind, reset_any, act_kind) == ("reset", True, "act")
+    assert torch.equal(act_obs, obs[:, :act_obs.shape[1]])
+    wrapped.close()
