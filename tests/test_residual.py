@@ -69,6 +69,22 @@ def test_zero_residual_reproduces_base():
     wrapped.close()
 
 
+def test_residual_is_scaled_then_clamped():
+    env = make_env((0.0, 0.0))
+    act_dim = env.single_action_space.shape[0]
+    wrapped = ResidualWrapper(env, HoldBase(act_dim), 0.1)
+    wrapped.reset(seed=0)
+    sent = []
+    inner_step = env.step
+    env.step = lambda action: (sent.append(action.clone()), inner_step(action))[1]
+    base_action = HoldBase(act_dim).act(torch.zeros((1, 1)))
+    wrapped.step(torch.full((1, act_dim), 0.5))
+    assert torch.allclose(sent[0], torch.clamp(base_action + 0.05, -1, 1))
+    wrapped.step(torch.full((1, act_dim), 100.0))
+    assert torch.allclose(sent[1], torch.ones((1, act_dim)))
+    wrapped.close()
+
+
 class RecordingBase(HoldBase):
     def __init__(self, act_dim):
         super().__init__(act_dim)
