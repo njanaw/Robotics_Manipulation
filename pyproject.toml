@@ -9,6 +9,7 @@ dependencies = [
     "sapien>=3.0.3",
     "tensorboard>=2.21.0",
     "torch>=2.15.0",
+    "tyro>=1.0.16",
 ]
 
 [dependency-groups]

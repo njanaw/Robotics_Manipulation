@@ -3,7 +3,7 @@ import os
 import random
 import time
 from dataclasses import dataclass
-from typing import Optional
+from typing import Literal, Optional
 
 import gymnasium as gym
 import numpy as np
@@ -54,7 +54,7 @@ class Args:
     """physx_cuda for training, physx_cpu (num_envs 1) for local smoke tests"""
     hole_offset_range: tuple[float, float] = (0.0, 0.0)
     """observed hole offset magnitude range in metres; (0, 0.004) for the noise-trained residual"""
-    base: Optional[str] = None
+    base: Optional[Literal["hold"]] = None
     """frozen base policy for residual RL; None trains PPO from scratch"""
     residual_scale: float = 0.1
     """residual action scale, from ResiP"""
@@ -229,8 +229,6 @@ if __name__ == "__main__":
 
     max_episode_steps = gym_utils.find_max_episode_steps_value(envs._env)
     if args.base is not None:
-        if args.base != "hold":
-            raise ValueError(f"unknown base {args.base}")
         act_dim = envs.single_action_space.shape[0]
         envs = ResidualWrapper(envs, HoldBase(act_dim), args.residual_scale)
         eval_envs = ResidualWrapper(eval_envs, HoldBase(act_dim), args.residual_scale)
@@ -275,7 +273,6 @@ if __name__ == "__main__":
 
     # TRY NOT TO MODIFY: start the game
     global_step = 0
-    start_time = time.time()
     next_obs, _ = envs.reset(seed=args.seed)
     eval_obs, _ = eval_envs.reset(seed=args.seed)
     next_done = torch.zeros(args.num_envs, device=device)
@@ -299,8 +296,9 @@ if __name__ == "__main__":
             torch.manual_seed(args.seed + start_iteration)
             np.random.seed(args.seed + start_iteration)
             next_obs, _ = envs.reset(seed=args.seed + start_iteration)
+            eval_obs, _ = eval_envs.reset(seed=args.seed + start_iteration)
 
-    start_global_step = global_step
+    start_global_step, start_time = global_step, time.time()
     for iteration in range(start_iteration, args.num_iterations + 1):
         print(f"Epoch: {iteration}, global_step={global_step}")
         final_values = torch.zeros((args.num_steps, args.num_envs), device=device)

@@ -2593,6 +2593,7 @@ dependencies = [
     { name = "sapien" },
     { name = "tensorboard" },
     { name = "torch" },
+    { name = "tyro" },
 ]
 
 [package.dev-dependencies]
@@ -2608,6 +2609,7 @@ requires-dist = [
     { name = "sapien", specifier = ">=3.0.3" },
     { name = "tensorboard", specifier = ">=2.21.0" },
     { name = "torch", specifier = ">=2.15.0" },
+    { name = "tyro", specifier = ">=1.0.16" },
 ]
 
 [package.metadata.requires-dev]
