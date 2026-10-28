@@ -202,7 +202,8 @@ if __name__ == "__main__":
     torch.manual_seed(args.seed)
     torch.backends.cudnn.deterministic = args.torch_deterministic
 
-    device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
+    # physx_cpu returns cpu tensors, so the agent must live on cpu too
+    device = torch.device("cuda" if torch.cuda.is_available() and args.cuda and args.sim_backend == "physx_cuda" else "cpu")
 
     # env setup
     env_kwargs = dict(obs_mode="state", render_mode="rgb_array", sim_backend=args.sim_backend, reward_mode=args.reward_mode,
@@ -288,7 +289,7 @@ if __name__ == "__main__":
 
     start_iteration = 1
     if args.checkpoint:
-        ckpt = torch.load(args.checkpoint, weights_only=True)
+        ckpt = torch.load(args.checkpoint, map_location=device, weights_only=True)
         agent.load_state_dict(ckpt["agent"])
         if not args.evaluate:
             # resume after a cluster time limit: continue the step count so learning curves stay aligned
