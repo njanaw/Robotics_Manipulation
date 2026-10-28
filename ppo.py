@@ -60,21 +60,23 @@ class Args:
     """frozen base policy for residual RL; None trains PPO from scratch"""
     residual_scale: float = 0.1
     """residual action scale, from ResiP"""
-    total_timesteps: int = 10000000
+    reward_mode: str = "normalized_dense"
+    """normalized_dense for PPO from scratch (ManiSkill baseline), sparse for the residual (ResiP)"""
+    total_timesteps: int = 75_000_000
     """total timesteps of the experiments"""
     learning_rate: float = 3e-4
     """the learning rate of the optimizer"""
-    num_envs: int = 512
+    num_envs: int = 2048
     """the number of parallel environments"""
-    num_eval_envs: int = 8
+    num_eval_envs: int = 16
     """the number of parallel evaluation environments"""
     partial_reset: bool = True
     """whether to let parallel environments reset upon termination instead of truncation"""
     eval_partial_reset: bool = False
     """whether to let parallel evaluation environments reset upon termination instead of truncation"""
-    num_steps: int = 50
+    num_steps: int = 16
     """the number of steps to run in each environment per policy rollout"""
-    num_eval_steps: int = 50
+    num_eval_steps: int = 100
     """the number of steps to run in each evaluation environment during evaluation"""
     reconfiguration_freq: Optional[int] = None
     """how often to reconfigure the environment during training"""
@@ -84,13 +86,13 @@ class Args:
     """the control mode to use for the environment"""
     anneal_lr: bool = False
     """Toggle learning rate annealing for policy and value networks"""
-    gamma: float = 0.8
+    gamma: float = 0.97
     """the discount factor gamma"""
-    gae_lambda: float = 0.9
+    gae_lambda: float = 0.95
     """the lambda for the general advantage estimation"""
     num_minibatches: int = 32
     """the number of mini-batches"""
-    update_epochs: int = 4
+    update_epochs: int = 8
     """the K epochs to update the policy"""
     norm_adv: bool = True
     """Toggles advantages normalization"""
@@ -205,7 +207,7 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
 
     # env setup
-    env_kwargs = dict(obs_mode="state", render_mode="rgb_array", sim_backend=args.sim_backend,
+    env_kwargs = dict(obs_mode="state", render_mode="rgb_array", sim_backend=args.sim_backend, reward_mode=args.reward_mode,
                       hole_offset_range=args.hole_offset_range)
     if args.control_mode is not None:
         env_kwargs["control_mode"] = args.control_mode
@@ -240,8 +242,8 @@ if __name__ == "__main__":
         if args.track:
             import wandb
             config = vars(args)
-            config["env_cfg"] = dict(**env_kwargs, num_envs=args.num_envs, env_id=args.env_id, reward_mode="normalized_dense", env_horizon=max_episode_steps, partial_reset=args.partial_reset)
-            config["eval_env_cfg"] = dict(**env_kwargs, num_envs=args.num_eval_envs, env_id=args.env_id, reward_mode="normalized_dense", env_horizon=max_episode_steps, partial_reset=False)
+            config["env_cfg"] = dict(**env_kwargs, num_envs=args.num_envs, env_id=args.env_id, env_horizon=max_episode_steps, partial_reset=args.partial_reset)
+            config["eval_env_cfg"] = dict(**env_kwargs, num_envs=args.num_eval_envs, env_id=args.env_id, env_horizon=max_episode_steps, partial_reset=False)
             wandb.init(
                 project=args.wandb_project_name,
                 entity=args.wandb_entity,
