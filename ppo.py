@@ -32,8 +32,6 @@ class Args:
     """seed of the experiment"""
     torch_deterministic: bool = True
     """if toggled, `torch.backends.cudnn.deterministic=True`"""
-    cuda: bool = True
-    """if toggled, cuda will be enabled by default"""
     track: bool = False
     """if toggled, this experiment will be tracked with Weights and Biases"""
     wandb_project_name: str = "ManiSkill"
@@ -60,8 +58,8 @@ class Args:
     """frozen base policy for residual RL; None trains PPO from scratch"""
     residual_scale: float = 0.1
     """residual action scale, from ResiP"""
-    reward_mode: str = "normalized_dense"
-    """normalized_dense for PPO from scratch (ManiSkill baseline), sparse for the residual (ResiP)"""
+    reward_mode: Optional[str] = None
+    """None picks sparse for the residual (ResiP) and normalized_dense for PPO from scratch (ManiSkill baseline)"""
     total_timesteps: int = 75_000_000
     """total timesteps of the experiments"""
     learning_rate: float = 3e-4
@@ -189,6 +187,8 @@ if __name__ == "__main__":
     args.batch_size = int(args.num_envs * args.num_steps)
     args.minibatch_size = int(args.batch_size // args.num_minibatches)
     args.num_iterations = args.total_timesteps // args.batch_size
+    if args.reward_mode is None:
+        args.reward_mode = "sparse" if args.base is not None else "normalized_dense"
     if args.exp_name is None:
         args.exp_name = os.path.basename(__file__)[: -len(".py")]
         run_name = f"{args.env_id}__{args.exp_name}__{args.seed}__{int(time.time())}"
@@ -201,9 +201,6 @@ if __name__ == "__main__":
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     torch.backends.cudnn.deterministic = args.torch_deterministic
-
-    # physx_cpu returns cpu tensors, so the agent must live on cpu too
-    device = torch.device("cuda" if torch.cuda.is_available() and args.cuda and args.sim_backend == "physx_cuda" else "cpu")
 
     # env setup
     env_kwargs = dict(obs_mode="state", render_mode="rgb_array", sim_backend=args.sim_backend, reward_mode=args.reward_mode,
@@ -227,6 +224,8 @@ if __name__ == "__main__":
     envs = ManiSkillVectorEnv(envs, args.num_envs, ignore_terminations=not args.partial_reset, record_metrics=True)
     eval_envs = ManiSkillVectorEnv(eval_envs, args.num_eval_envs, ignore_terminations=not args.eval_partial_reset, record_metrics=True)
     assert isinstance(envs.single_action_space, gym.spaces.Box), "only continuous action space is supported"
+    # agent lives where the sim returns tensors, so obs never cross devices
+    device = envs.device
 
     max_episode_steps = gym_utils.find_max_episode_steps_value(envs._env)
     if args.base is not None:
@@ -295,6 +294,10 @@ if __name__ == "__main__":
             # resume after a cluster time limit: continue the step count so learning curves stay aligned
             optimizer.load_state_dict(ckpt["optimizer"])
             start_iteration, global_step = ckpt["iteration"], ckpt["global_step"]
+            # fresh seeds so a resumed run does not replay the first iterations' starts and noise
+            torch.manual_seed(args.seed + start_iteration)
+            np.random.seed(args.seed + start_iteration)
+            next_obs, _ = envs.reset(seed=args.seed + start_iteration)
 
     for iteration in range(start_iteration, args.num_iterations + 1):
         print(f"Epoch: {iteration}, global_step={global_step}")
