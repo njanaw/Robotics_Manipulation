@@ -31,7 +31,6 @@ class PegInsertionSideNoisyEnv(PegInsertionSideEnv):
         magnitude = torch.rand(b, device=self.device) * (high - low) + low
         angle = torch.rand(b, device=self.device) * 2 * torch.pi
         # hole frame x is the insertion axis (see has_peg_inserted), so the offset lives in y-z
-        self.hole_offsets[env_idx, 0] = 0
         self.hole_offsets[env_idx, 1] = magnitude * torch.cos(angle)
         self.hole_offsets[env_idx, 2] = magnitude * torch.sin(angle)
 
