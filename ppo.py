@@ -293,10 +293,12 @@ if __name__ == "__main__":
             optimizer.load_state_dict(ckpt["optimizer"])
             start_iteration, global_step = ckpt["iteration"], ckpt["global_step"]
             # fresh seeds so a resumed run does not replay the first iterations' starts and noise
-            torch.manual_seed(args.seed + start_iteration)
-            np.random.seed(args.seed + start_iteration)
-            next_obs, _ = envs.reset(seed=args.seed + start_iteration)
-            eval_obs, _ = eval_envs.reset(seed=args.seed + start_iteration)
+            # spaced so different training seeds never share a resume seed
+            resume_seed = args.seed + 10_000 * start_iteration
+            torch.manual_seed(resume_seed)
+            np.random.seed(resume_seed)
+            next_obs, _ = envs.reset(seed=resume_seed)
+            eval_obs, _ = eval_envs.reset(seed=resume_seed)
 
     start_global_step, start_time = global_step, time.time()
     for iteration in range(start_iteration, args.num_iterations + 1):
