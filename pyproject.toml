@@ -5,6 +5,17 @@ requires-python = ">=3.11"
 dependencies = [
     "gymnasium>=1.4.0",
     "mani-skill>=3.0.1",
+    "mplib==0.2.1",
     "sapien>=3.0.3",
     "torch>=2.15.0",
 ]
+
+# mani-skill 3.0.1 pins mplib==0.1.1 exactly, but that wheel segfaults inside
+# its own native extension on this machine (reproduced even in isolation,
+# with no mani-skill/sapien/torch involved, and with a fresh independent
+# install) -- confirmed via gdb that the crash is a null function-pointer
+# call inside mplib's own pymp.so, not anything in this project. mplib==0.2.1
+# constructs the same Panda Planner without crashing, so this override lets
+# uv resolve past mani-skill's exact pin.
+[tool.uv]
+override-dependencies = ["mplib==0.2.1"]
