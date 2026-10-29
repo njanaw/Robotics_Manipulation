@@ -28,6 +28,17 @@ class PegInsertionSideNoisyEnv(PegInsertionSideEnv):
 
     def _initialize_episode(self, env_idx: torch.Tensor, options: dict):
         super()._initialize_episode(env_idx, options)
+        self._sample_hole_offsets(env_idx)
+
+    def set_state_dict(self, state: dict, env_idx: torch.Tensor = None):
+        super().set_state_dict(state, env_idx)
+        # reset(options=dict(reset_to_env_states=...)) restores a saved start state through here and
+        # skips _initialize_episode (sapien_env.py reset), so draw this episode's offset here as well
+        if env_idx is None:
+            env_idx = torch.arange(self.num_envs, device=self.device)
+        self._sample_hole_offsets(env_idx)
+
+    def _sample_hole_offsets(self, env_idx: torch.Tensor):
         b = len(env_idx)
         low, high = self.hole_offset_range
         magnitude = torch.rand(b, device=self.device) * (high - low) + low

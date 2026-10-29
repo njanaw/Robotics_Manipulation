@@ -116,3 +116,18 @@ def test_base_resets_before_acting_on_next_episode():
     assert (reset_kind, reset_any, act_kind) == ("reset", True, "act")
     assert torch.equal(act_obs, obs[:, :act_obs.shape[1]])
     wrapped.close()
+
+
+def test_offset_is_redrawn_on_reset_to_saved_state():
+    # start states are restored with reset_to_env_states, which skips _initialize_episode
+    env = make_env((0.002, 0.004))
+    env.reset(seed=0)
+    saved = env.unwrapped.get_state_dict()
+    offsets = []
+    for seed in range(5):
+        env.reset(seed=seed, options=dict(reset_to_env_states=dict(env_states=saved)))
+        offset = hole_frame_offset(env)
+        assert 0.002 - 1e-6 <= torch.linalg.norm(offset).item() <= 0.004 + 1e-6
+        offsets.append(offset)
+    assert len({tuple(o.tolist()) for o in offsets}) == 5
+    env.close()
