@@ -1,0 +1,1522 @@
+{
+  "env_info": {
+    "env_id": "PegInsertionSide-v1",
+    "env_kwargs": {
+      "obs_mode": "state",
+      "control_mode": "pd_ee_delta_pose",
+      "render_mode": "rgb_array",
+      "reward_mode": null,
+      "sensor_configs": {
+        "shader_pack": "default"
+      },
+      "human_render_camera_configs": {
+        "shader_pack": "default"
+      },
+      "viewer_camera_configs": {
+        "shader_pack": "default"
+      },
+      "sim_backend": "physx_cpu",
+      "num_envs": 1
+    },
+    "max_episode_steps": 100
+  },
+  "commit_info": null,
+  "episodes": [
+    {
+      "episode_id": 0,
+      "episode_seed": 2,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 178,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 2
+      },
+      "success": true
+    },
+    {
+      "episode_id": 1,
+      "episode_seed": 6,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 123,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 6
+      },
+      "success": true
+    },
+    {
+      "episode_id": 2,
+      "episode_seed": 9,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 189,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 9
+      },
+      "success": true
+    },
+    {
+      "episode_id": 3,
+      "episode_seed": 10,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 124,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 10
+      },
+      "success": true
+    },
+    {
+      "episode_id": 4,
+      "episode_seed": 11,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 151,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 11
+      },
+      "success": true
+    },
+    {
+      "episode_id": 5,
+      "episode_seed": 12,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 128,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 12
+      },
+      "success": true
+    },
+    {
+      "episode_id": 6,
+      "episode_seed": 13,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 155,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 13
+      },
+      "success": true
+    },
+    {
+      "episode_id": 7,
+      "episode_seed": 14,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 190,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 14
+      },
+      "success": true
+    },
+    {
+      "episode_id": 8,
+      "episode_seed": 15,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 193,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 15
+      },
+      "success": true
+    },
+    {
+      "episode_id": 9,
+      "episode_seed": 17,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 150,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 17
+      },
+      "success": true
+    },
+    {
+      "episode_id": 10,
+      "episode_seed": 18,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 192,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 18
+      },
+      "success": true
+    },
+    {
+      "episode_id": 11,
+      "episode_seed": 19,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 161,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 19
+      },
+      "success": true
+    },
+    {
+      "episode_id": 12,
+      "episode_seed": 23,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 200,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 23
+      },
+      "success": true
+    },
+    {
+      "episode_id": 13,
+      "episode_seed": 24,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 203,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 24
+      },
+      "success": true
+    },
+    {
+      "episode_id": 14,
+      "episode_seed": 26,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 148,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 26
+      },
+      "success": true
+    },
+    {
+      "episode_id": 15,
+      "episode_seed": 29,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 148,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 29
+      },
+      "success": true
+    },
+    {
+      "episode_id": 16,
+      "episode_seed": 32,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 140,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 32
+      },
+      "success": true
+    },
+    {
+      "episode_id": 17,
+      "episode_seed": 33,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 112,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 33
+      },
+      "success": true
+    },
+    {
+      "episode_id": 18,
+      "episode_seed": 34,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 184,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 34
+      },
+      "success": true
+    },
+    {
+      "episode_id": 19,
+      "episode_seed": 35,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 122,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 35
+      },
+      "success": true
+    },
+    {
+      "episode_id": 20,
+      "episode_seed": 36,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 182,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 36
+      },
+      "success": true
+    },
+    {
+      "episode_id": 21,
+      "episode_seed": 39,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 159,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 39
+      },
+      "success": true
+    },
+    {
+      "episode_id": 22,
+      "episode_seed": 40,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 172,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 40
+      },
+      "success": true
+    },
+    {
+      "episode_id": 23,
+      "episode_seed": 41,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 117,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 41
+      },
+      "success": true
+    },
+    {
+      "episode_id": 24,
+      "episode_seed": 42,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 127,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 42
+      },
+      "success": true
+    },
+    {
+      "episode_id": 25,
+      "episode_seed": 43,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 142,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 43
+      },
+      "success": true
+    },
+    {
+      "episode_id": 26,
+      "episode_seed": 44,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 119,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 44
+      },
+      "success": true
+    },
+    {
+      "episode_id": 27,
+      "episode_seed": 45,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 157,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 45
+      },
+      "success": true
+    },
+    {
+      "episode_id": 28,
+      "episode_seed": 49,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 142,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 49
+      },
+      "success": true
+    },
+    {
+      "episode_id": 29,
+      "episode_seed": 50,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 129,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 50
+      },
+      "success": true
+    },
+    {
+      "episode_id": 30,
+      "episode_seed": 51,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 186,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 51
+      },
+      "success": true
+    },
+    {
+      "episode_id": 31,
+      "episode_seed": 52,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 155,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 52
+      },
+      "success": true
+    },
+    {
+      "episode_id": 32,
+      "episode_seed": 53,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 122,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 53
+      },
+      "success": true
+    },
+    {
+      "episode_id": 33,
+      "episode_seed": 54,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 105,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 54
+      },
+      "success": true
+    },
+    {
+      "episode_id": 34,
+      "episode_seed": 55,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 164,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 55
+      },
+      "success": true
+    },
+    {
+      "episode_id": 35,
+      "episode_seed": 56,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 141,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 56
+      },
+      "success": true
+    },
+    {
+      "episode_id": 36,
+      "episode_seed": 57,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 116,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 57
+      },
+      "success": true
+    },
+    {
+      "episode_id": 37,
+      "episode_seed": 58,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 189,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 58
+      },
+      "success": true
+    },
+    {
+      "episode_id": 38,
+      "episode_seed": 59,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 140,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 59
+      },
+      "success": true
+    },
+    {
+      "episode_id": 39,
+      "episode_seed": 61,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 150,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 61
+      },
+      "success": true
+    },
+    {
+      "episode_id": 40,
+      "episode_seed": 62,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 108,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 62
+      },
+      "success": true
+    },
+    {
+      "episode_id": 41,
+      "episode_seed": 63,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 130,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 63
+      },
+      "success": true
+    },
+    {
+      "episode_id": 42,
+      "episode_seed": 64,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 123,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 64
+      },
+      "success": true
+    },
+    {
+      "episode_id": 43,
+      "episode_seed": 65,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 156,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 65
+      },
+      "success": true
+    },
+    {
+      "episode_id": 44,
+      "episode_seed": 66,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 202,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 66
+      },
+      "success": true
+    },
+    {
+      "episode_id": 45,
+      "episode_seed": 69,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 130,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 69
+      },
+      "success": true
+    },
+    {
+      "episode_id": 46,
+      "episode_seed": 71,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 198,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 71
+      },
+      "success": true
+    },
+    {
+      "episode_id": 47,
+      "episode_seed": 72,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 195,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 72
+      },
+      "success": true
+    },
+    {
+      "episode_id": 48,
+      "episode_seed": 73,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 139,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 73
+      },
+      "success": true
+    },
+    {
+      "episode_id": 49,
+      "episode_seed": 74,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 116,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 74
+      },
+      "success": true
+    },
+    {
+      "episode_id": 50,
+      "episode_seed": 75,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 141,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 75
+      },
+      "success": true
+    },
+    {
+      "episode_id": 51,
+      "episode_seed": 76,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 166,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 76
+      },
+      "success": true
+    },
+    {
+      "episode_id": 52,
+      "episode_seed": 77,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 196,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 77
+      },
+      "success": true
+    },
+    {
+      "episode_id": 53,
+      "episode_seed": 79,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 146,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 79
+      },
+      "success": true
+    },
+    {
+      "episode_id": 54,
+      "episode_seed": 81,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 197,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 81
+      },
+      "success": true
+    },
+    {
+      "episode_id": 55,
+      "episode_seed": 83,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 195,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 83
+      },
+      "success": true
+    },
+    {
+      "episode_id": 56,
+      "episode_seed": 84,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 138,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 84
+      },
+      "success": true
+    },
+    {
+      "episode_id": 57,
+      "episode_seed": 85,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 129,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 85
+      },
+      "success": true
+    },
+    {
+      "episode_id": 58,
+      "episode_seed": 86,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 168,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 86
+      },
+      "success": true
+    },
+    {
+      "episode_id": 59,
+      "episode_seed": 87,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 119,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 87
+      },
+      "success": true
+    },
+    {
+      "episode_id": 60,
+      "episode_seed": 88,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 132,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 88
+      },
+      "success": true
+    },
+    {
+      "episode_id": 61,
+      "episode_seed": 89,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 161,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 89
+      },
+      "success": true
+    },
+    {
+      "episode_id": 62,
+      "episode_seed": 90,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 116,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 90
+      },
+      "success": true
+    },
+    {
+      "episode_id": 63,
+      "episode_seed": 94,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 188,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 94
+      },
+      "success": true
+    },
+    {
+      "episode_id": 64,
+      "episode_seed": 95,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 192,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 95
+      },
+      "success": true
+    },
+    {
+      "episode_id": 65,
+      "episode_seed": 96,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 126,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 96
+      },
+      "success": true
+    },
+    {
+      "episode_id": 66,
+      "episode_seed": 99,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 122,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 99
+      },
+      "success": true
+    },
+    {
+      "episode_id": 67,
+      "episode_seed": 100,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 149,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 100
+      },
+      "success": true
+    },
+    {
+      "episode_id": 68,
+      "episode_seed": 102,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 134,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 102
+      },
+      "success": true
+    },
+    {
+      "episode_id": 69,
+      "episode_seed": 103,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 200,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 103
+      },
+      "success": true
+    },
+    {
+      "episode_id": 70,
+      "episode_seed": 104,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 146,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 104
+      },
+      "success": true
+    },
+    {
+      "episode_id": 71,
+      "episode_seed": 105,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 219,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 105
+      },
+      "success": true
+    },
+    {
+      "episode_id": 72,
+      "episode_seed": 107,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 128,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 107
+      },
+      "success": true
+    },
+    {
+      "episode_id": 73,
+      "episode_seed": 108,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 146,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 108
+      },
+      "success": true
+    },
+    {
+      "episode_id": 74,
+      "episode_seed": 110,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 147,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 110
+      },
+      "success": true
+    },
+    {
+      "episode_id": 75,
+      "episode_seed": 112,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 149,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 112
+      },
+      "success": true
+    },
+    {
+      "episode_id": 76,
+      "episode_seed": 113,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 159,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 113
+      },
+      "success": true
+    },
+    {
+      "episode_id": 77,
+      "episode_seed": 114,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 148,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 114
+      },
+      "success": true
+    },
+    {
+      "episode_id": 78,
+      "episode_seed": 116,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 153,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 116
+      },
+      "success": true
+    },
+    {
+      "episode_id": 79,
+      "episode_seed": 117,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 134,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 117
+      },
+      "success": true
+    },
+    {
+      "episode_id": 80,
+      "episode_seed": 120,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 143,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 120
+      },
+      "success": true
+    },
+    {
+      "episode_id": 81,
+      "episode_seed": 122,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 160,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 122
+      },
+      "success": true
+    },
+    {
+      "episode_id": 82,
+      "episode_seed": 123,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 158,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 123
+      },
+      "success": true
+    },
+    {
+      "episode_id": 83,
+      "episode_seed": 124,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 132,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 124
+      },
+      "success": true
+    },
+    {
+      "episode_id": 84,
+      "episode_seed": 125,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 171,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 125
+      },
+      "success": true
+    },
+    {
+      "episode_id": 85,
+      "episode_seed": 126,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 137,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 126
+      },
+      "success": true
+    },
+    {
+      "episode_id": 86,
+      "episode_seed": 127,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 179,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 127
+      },
+      "success": true
+    },
+    {
+      "episode_id": 87,
+      "episode_seed": 129,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 185,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 129
+      },
+      "success": true
+    },
+    {
+      "episode_id": 88,
+      "episode_seed": 130,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 150,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 130
+      },
+      "success": true
+    },
+    {
+      "episode_id": 89,
+      "episode_seed": 132,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 144,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 132
+      },
+      "success": true
+    },
+    {
+      "episode_id": 90,
+      "episode_seed": 100,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 149,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 100
+      },
+      "success": true
+    },
+    {
+      "episode_id": 91,
+      "episode_seed": 102,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 134,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 102
+      },
+      "success": true
+    },
+    {
+      "episode_id": 92,
+      "episode_seed": 103,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 200,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 103
+      },
+      "success": true
+    },
+    {
+      "episode_id": 93,
+      "episode_seed": 104,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 146,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 104
+      },
+      "success": true
+    },
+    {
+      "episode_id": 94,
+      "episode_seed": 105,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 219,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 105
+      },
+      "success": true
+    },
+    {
+      "episode_id": 95,
+      "episode_seed": 107,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 128,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 107
+      },
+      "success": true
+    },
+    {
+      "episode_id": 96,
+      "episode_seed": 108,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 146,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 108
+      },
+      "success": true
+    },
+    {
+      "episode_id": 97,
+      "episode_seed": 110,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 147,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 110
+      },
+      "success": true
+    },
+    {
+      "episode_id": 98,
+      "episode_seed": 112,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 149,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 112
+      },
+      "success": true
+    },
+    {
+      "episode_id": 99,
+      "episode_seed": 113,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 159,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 113
+      },
+      "success": true
+    },
+    {
+      "episode_id": 100,
+      "episode_seed": 114,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 148,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 114
+      },
+      "success": true
+    },
+    {
+      "episode_id": 101,
+      "episode_seed": 116,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 153,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 116
+      },
+      "success": true
+    },
+    {
+      "episode_id": 102,
+      "episode_seed": 117,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 134,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 117
+      },
+      "success": true
+    },
+    {
+      "episode_id": 103,
+      "episode_seed": 120,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 143,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 120
+      },
+      "success": true
+    },
+    {
+      "episode_id": 104,
+      "episode_seed": 122,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 160,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 122
+      },
+      "success": true
+    },
+    {
+      "episode_id": 105,
+      "episode_seed": 123,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 158,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 123
+      },
+      "success": true
+    },
+    {
+      "episode_id": 106,
+      "episode_seed": 124,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 132,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 124
+      },
+      "success": true
+    },
+    {
+      "episode_id": 107,
+      "episode_seed": 125,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 171,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 125
+      },
+      "success": true
+    },
+    {
+      "episode_id": 108,
+      "episode_seed": 126,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 137,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 126
+      },
+      "success": true
+    },
+    {
+      "episode_id": 109,
+      "episode_seed": 127,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 179,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 127
+      },
+      "success": true
+    },
+    {
+      "episode_id": 110,
+      "episode_seed": 129,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 185,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 129
+      },
+      "success": true
+    },
+    {
+      "episode_id": 111,
+      "episode_seed": 130,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 150,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 130
+      },
+      "success": true
+    },
+    {
+      "episode_id": 112,
+      "episode_seed": 132,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 144,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 132
+      },
+      "success": true
+    },
+    {
+      "episode_id": 113,
+      "episode_seed": 133,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 150,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 133
+      },
+      "success": true
+    },
+    {
+      "episode_id": 114,
+      "episode_seed": 136,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 138,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 136
+      },
+      "success": true
+    },
+    {
+      "episode_id": 115,
+      "episode_seed": 137,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 161,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 137
+      },
+      "success": true
+    },
+    {
+      "episode_id": 116,
+      "episode_seed": 139,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 128,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 139
+      },
+      "success": true
+    },
+    {
+      "episode_id": 117,
+      "episode_seed": 140,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 119,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 140
+      },
+      "success": true
+    },
+    {
+      "episode_id": 118,
+      "episode_seed": 143,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 423,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 143
+      },
+      "success": true
+    },
+    {
+      "episode_id": 119,
+      "episode_seed": 145,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 153,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 145
+      },
+      "success": true
+    },
+    {
+      "episode_id": 120,
+      "episode_seed": 148,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 168,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 148
+      },
+      "success": true
+    },
+    {
+      "episode_id": 121,
+      "episode_seed": 149,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 118,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 149
+      },
+      "success": true
+    },
+    {
+      "episode_id": 122,
+      "episode_seed": 150,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 150,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 150
+      },
+      "success": true
+    },
+    {
+      "episode_id": 123,
+      "episode_seed": 151,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 150,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 151
+      },
+      "success": true
+    },
+    {
+      "episode_id": 124,
+      "episode_seed": 153,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 141,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 153
+      },
+      "success": true
+    },
+    {
+      "episode_id": 125,
+      "episode_seed": 154,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 142,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 154
+      },
+      "success": true
+    },
+    {
+      "episode_id": 126,
+      "episode_seed": 158,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 105,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 158
+      },
+      "success": true
+    },
+    {
+      "episode_id": 127,
+      "episode_seed": 159,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 140,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 159
+      },
+      "success": true
+    },
+    {
+      "episode_id": 128,
+      "episode_seed": 162,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 191,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 162
+      },
+      "success": true
+    },
+    {
+      "episode_id": 129,
+      "episode_seed": 164,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 138,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 164
+      },
+      "success": true
+    },
+    {
+      "episode_id": 130,
+      "episode_seed": 168,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 120,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 168
+      },
+      "success": true
+    },
+    {
+      "episode_id": 131,
+      "episode_seed": 169,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 196,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 169
+      },
+      "success": true
+    },
+    {
+      "episode_id": 132,
+      "episode_seed": 170,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 124,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 170
+      },
+      "success": true
+    },
+    {
+      "episode_id": 133,
+      "episode_seed": 173,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 191,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 173
+      },
+      "success": true
+    },
+    {
+      "episode_id": 134,
+      "episode_seed": 175,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 162,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 175
+      },
+      "success": true
+    },
+    {
+      "episode_id": 135,
+      "episode_seed": 176,
+      "control_mode": "pd_ee_delta_pose",
+      "elapsed_steps": 189,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 176
+      },
+      "success": true
+    }
+  ]
+}
